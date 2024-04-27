@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15.6-alpine3.19
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - api_network
+
+  api:
+    image: eclipse-temurin:17-jdk-alpine
+    depends_on:
+      - db
+    working_dir: /kanflow
+    command: ./gradlew bootRun
+    ports:
+      - 8080
+    volumes:
+      - .:/kanflow
+    networks:
+      - api_network
+
+volumes:
+  db_data:
+
+networks:
+  api_network:
