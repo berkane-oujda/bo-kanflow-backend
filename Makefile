@@ -1,13 +1,13 @@
 local:
 	@make db &
-	@make api
+	@make api; docker rm -f kanflow_db;
 
 api:
 	@./gradlew bootRun;
 
 db: kanflow_db_data
 	@env `cat .env | grep -v ^# ` \
-		sh -c 'docker run --rm \
+		sh -c 'docker run --name kanflow_db\
 		-p$${DB_PORT}:5432 \
 		-e POSTGRES_USER=$${POSTGRES_USER} \
 		-e POSTGRES_PASSWORD=$${POSTGRES_PASSWORD} \
@@ -18,7 +18,7 @@ db: kanflow_db_data
 kanflow_db_data:
 	@docker volume create kanflow_db_data
 
-status:
-	@curl http://localhost:8080/status
+health:
+	@curl http://localhost:8080/health
 
 .PHONY: local api db kanflow_db_data status
