@@ -16,21 +16,19 @@ import com.example.kanflow.model.User;
 import com.example.kanflow.service.TokenService;
 import com.example.kanflow.service.UserServiceImplementation;
 
+
 @RestController
 @RequestMapping("/auth")
 public class Auth {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    // @Autowired
-    // private Authentication authentication;
     @Autowired
     private UserServiceImplementation userService;
     @Autowired
     private TokenService tokenService;
 
     @PostMapping("/register")
-
     public String register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
         User user = this.userService.findByEmail(body.getEmail());
         if (user != null) {
