@@ -26,6 +26,7 @@ public class TokenService {
                 .issuedAt(now)
                 .expiresAt(now.plus(15, ChronoUnit.DAYS))
                 .subject("kanflow")
+                .claim("userId", user.getID())
                 .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
