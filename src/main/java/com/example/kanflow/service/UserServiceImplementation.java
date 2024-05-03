@@ -1,14 +1,13 @@
 
 package com.example.kanflow.service;
 
-import com.example.kanflow.service.UserService;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.kanflow.model.User;
 import com.example.kanflow.repository.UserRepository;
-
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 
 
@@ -22,6 +21,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
