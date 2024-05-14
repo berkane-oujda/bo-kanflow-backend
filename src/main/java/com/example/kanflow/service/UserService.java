@@ -3,8 +3,6 @@ import java.util.List;
 
 import com.example.kanflow.model.User;
 
-
-
 public interface UserService {
     User getUserById(Long id);
     User findByEmail(String email);

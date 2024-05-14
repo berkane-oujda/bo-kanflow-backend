@@ -1,4 +1,3 @@
-
 package com.example.kanflow.service;
 
 import java.util.List;
@@ -9,11 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.kanflow.model.User;
 import com.example.kanflow.repository.UserRepository;
 
-
-
-
 @Service
-public class UserServiceImplementation implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
