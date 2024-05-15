@@ -24,4 +24,10 @@ kanflow_db_data:
 health:
 	@curl http://localhost:8080/health
 
-.PHONY: local api db kanflow_db_data status
+d:
+	./gradlew dependencies
+
+rd:
+	./gradlew --refresh-dependencies
+
+.PHONY: local api db kanflow_db_data status d rd
