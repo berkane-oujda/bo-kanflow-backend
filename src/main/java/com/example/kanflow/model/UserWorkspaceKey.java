@@ -1,6 +1,7 @@
 package com.example.kanflow.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -9,12 +10,12 @@ import jakarta.persistence.Embeddable;
 public class UserWorkspaceKey implements Serializable {
 
     @Column(name = "user_id")
-    Long userId;
+    UUID userId;
 
     @Column(name = "workspace_id")
-    Long workspaceId;
+    UUID workspaceId;
 
-    public UserWorkspaceKey(Long userId, Long workspaceId) {
+    public UserWorkspaceKey(UUID userId, UUID workspaceId) {
         this.userId = userId;
         this.workspaceId = workspaceId;
     }

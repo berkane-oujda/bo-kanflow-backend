@@ -1,6 +1,8 @@
 package com.example.kanflow.model;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,7 +21,7 @@ import jakarta.persistence.Table;
 public class Workspace {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -27,7 +30,7 @@ public class Workspace {
     private String avatar;
 
     @Column(nullable = false)
-    private Long ownerId;
+    private UUID ownerId;
 
     @Column
     @CreationTimestamp
@@ -37,13 +40,16 @@ public class Workspace {
     @UpdateTimestamp
     private Date updatedAt;
 
-    public Workspace(Long ownerId, String name, String avatar) {
+    @OneToMany(mappedBy = "workspace")
+    Set<UserWorkspace> userWorkspaces;
+
+    public Workspace(UUID ownerId, String name, String avatar) {
         this.ownerId = ownerId;
         this.name = name;
         this.avatar = avatar;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 }

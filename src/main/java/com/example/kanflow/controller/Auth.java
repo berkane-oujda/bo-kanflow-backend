@@ -14,8 +14,7 @@ import com.example.kanflow.dto.RegsiterDetailsDto;
 import com.example.kanflow.dto.TokenDto;
 import com.example.kanflow.model.User;
 import com.example.kanflow.service.TokenService;
-import com.example.kanflow.service.UserServiceImpl;
-
+import com.example.kanflow.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
@@ -24,7 +23,7 @@ public class Auth {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
     @Autowired
     private TokenService tokenService;
 

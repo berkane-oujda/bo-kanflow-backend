@@ -1,5 +1,7 @@
 package com.example.kanflow.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.kanflow.model.Workspace;
@@ -11,7 +13,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     WorkspaceRepository workspaceRepository;
 
     @Override
-    public Workspace createWorkspace(Long ownerId, String name, String avatar) {
+    public Workspace createWorkspace(UUID ownerId, String name, String avatar) {
         Workspace w = new Workspace(ownerId, name, avatar);
         return workspaceRepository.save(w);
     }

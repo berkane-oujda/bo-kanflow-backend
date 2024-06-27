@@ -1,6 +1,7 @@
 package com.example.kanflow.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,7 +27,7 @@ public class UserWorkspace {
     private User user;
 
     @ManyToOne
-    @MapsId("userId")
+    @MapsId("workspaceId")
     @JoinColumn(name = "workspace_id")
     private Workspace workspace;
 
@@ -41,7 +42,7 @@ public class UserWorkspace {
     @UpdateTimestamp
     private Date updatedAt;
 
-    public UserWorkspace(Long userId, Long workspaceId, String role) {
+    public UserWorkspace(UUID userId, UUID workspaceId, String role) {
         this.id = new UserWorkspaceKey(userId, workspaceId);
         this.role = role;
     }
