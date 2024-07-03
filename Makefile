@@ -2,6 +2,9 @@ local:
 	@make db &
 	@make api; docker rm -f kanflow_db;
 
+deps:
+	@./gradlew dependencies
+
 api:
 	@./gradlew bootRun;
 
