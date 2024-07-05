@@ -9,6 +9,7 @@ api:
 	@env `cat .env | grep -v ^# ` ./gradlew bootRun;
 
 db: kanflow_db_data
+	@docker rm -f kanflow_db
 	@env `cat .env | grep -v ^# ` \
 		sh -c 'docker run --name kanflow_db\
 		-p$${KANFLOW_DB_PORT}:5432 \
