@@ -3,11 +3,14 @@ package com.example.kanflow.config;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.kanflow.model.User;
@@ -18,19 +21,20 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Configuration
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserService userService;
 
-    private final JwtDecoder jwtDecoder;
+    private final RsaKeyProperties rsaKeys;
+    private JwtDecoder jwtDecoder;
 
-    public JwtTokenFilter(JwtDecoder jwtDecoder) {
-        this.jwtDecoder = jwtDecoder;
+    public JwtTokenFilter(RsaKeyProperties rsaKeys) {
+        this.rsaKeys = rsaKeys;
     }
 
     @Override
-
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = extractToken(request);
@@ -47,6 +51,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
     }
 
     private String extractToken(HttpServletRequest request) {

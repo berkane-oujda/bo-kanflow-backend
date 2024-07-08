@@ -16,7 +16,6 @@ import com.example.kanflow.model.User;
 import com.example.kanflow.service.TokenService;
 import com.example.kanflow.service.UserServiceImplementation;
 
-
 @RestController
 @RequestMapping("/auth")
 public class Auth {
@@ -30,14 +29,14 @@ public class Auth {
 
     @PostMapping("/register")
     public String register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
-        User user = this.userService.findByEmail(body.getEmail());
+        User user = userService.findByEmail(body.getEmail());
         if (user != null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "email already used");
         }
         String hashedPassword = bCryptPasswordEncoder.encode(body.getPassword());
-
         user = new User(body.getEmail(), body.getFirstname(), body.getLastname(), hashedPassword);
         userService.saveUser(user);
+
         return "OK!";
     }
 

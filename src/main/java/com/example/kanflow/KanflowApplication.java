@@ -13,5 +13,4 @@ public class KanflowApplication {
     public static void main(String[] args) {
         SpringApplication.run(KanflowApplication.class, args);
     }
-
 }

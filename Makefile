@@ -2,15 +2,16 @@ local:
 	@make db
 	@make api; docker rm -f kanflow_db;
 
-delete_db:
-	@docker rm -f kanflow_db
+deps:
+	@./gradlew dependencies
 
 api:
-	@env `cat .env | grep -v ^# | xargs` ./gradlew bootRun;
+	@env `cat .env | grep -v ^# ` ./gradlew bootRun;
 
-db: kanflow_db_data delete_db
+db: kanflow_db_data
+	@docker rm -f kanflow_db
 	@env `cat .env | grep -v ^# ` \
-		sh -c 'docker run -d --name kanflow_db\
+		sh -c 'docker run --name kanflow_db\
 		-p$${KANFLOW_DB_PORT}:5432 \
 		-e POSTGRES_USER=$${KANFLOW_POSTGRES_USER} \
 		-e POSTGRES_PASSWORD=$${KANFLOW_POSTGRES_PASSWORD} \
