@@ -1,5 +1,5 @@
 local:
-	@make db
+	@make db &
 	@make api; docker rm -f kanflow_db;
 
 deps:
