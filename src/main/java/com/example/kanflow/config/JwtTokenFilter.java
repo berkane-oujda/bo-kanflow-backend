@@ -28,7 +28,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private UserService userService;
 
     private final RsaKeyProperties rsaKeys;
-    private JwtDecoder jwtDecoder;
 
     public JwtTokenFilter(RsaKeyProperties rsaKeys) {
         this.rsaKeys = rsaKeys;
@@ -67,7 +66,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private Long getUserIdFromToken(String token) {
-        Jwt jwt = jwtDecoder.decode(token);
+        Jwt jwt = jwtDecoder().decode(token);
         return jwt.getClaim("userId");
     }
 }
