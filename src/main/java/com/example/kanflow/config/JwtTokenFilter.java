@@ -1,6 +1,7 @@
 package com.example.kanflow.config;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +39,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         try {
             String token = extractToken(request);
             if (token != null) {
-                Long userId = getUserIdFromToken(token);
+                UUID userId = getUserIdFromToken(token);
                 if (userId != null) {
                     User user = userService.getUserById(userId);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, null);
@@ -65,8 +66,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private Long getUserIdFromToken(String token) {
+    private UUID getUserIdFromToken(String token) {
         Jwt jwt = jwtDecoder().decode(token);
-        return jwt.getClaim("userId");
+        String claimAsString = jwt.getClaim("userId");
+        return UUID.fromString(claimAsString);
     }
 }
