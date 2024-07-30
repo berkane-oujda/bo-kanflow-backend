@@ -29,7 +29,7 @@ public class Auth {
     private TokenService tokenService;
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
+    public ResponseEntity<Void> register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
         User user = userService.findByEmail(body.getEmail());
         if (user != null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "email already used");
