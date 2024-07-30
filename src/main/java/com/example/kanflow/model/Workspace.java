@@ -1,18 +1,18 @@
 package com.example.kanflow.model;
 
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,12 +23,13 @@ public class Workspace {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String avatar;
 
+    @JsonIgnore
     @Column(name = "owner_id", nullable = false)
     private UUID ownerId;
 
@@ -40,13 +41,12 @@ public class Workspace {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "workspace")
-    Set<UserWorkspace> userWorkspaces;
-
     public Workspace(UUID ownerId, String name, String avatar) {
         this.ownerId = ownerId;
         this.name = name;
         this.avatar = avatar;
+    }
+    public Workspace() {
     }
 
     public UUID getId() {

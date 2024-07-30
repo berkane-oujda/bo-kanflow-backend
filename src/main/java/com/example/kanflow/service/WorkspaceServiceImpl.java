@@ -27,17 +27,27 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
     @Override
     public Workspace getById(UUID workspaceId) {
-        return workspaceRepository.getReferenceById(workspaceId);
+        return workspaceRepository.findById(workspaceId).orElse(null);
     }
 
     @Override
-    public Workspace rename(UUID workspaceId, String name) {
-        return workspaceRepository.getReferenceById(workspaceId);
+    public void rename(UUID workspaceId, String name) {
+        workspaceRepository.renameWorkspace(workspaceId, name);
     }
 
     @Override
     public Workspace getWorkspaceByName(String name) {
         return workspaceRepository.findByName(name);
+    }
+
+    @Override
+    public Workspace get(UUID ownerId, String name) {
+        return workspaceRepository.findByOwnerIdAndName(ownerId, name);
+    }
+
+    @Override
+    public List<Workspace> getWorkspacesByOwnerId(UUID ownerId) {
+        return workspaceRepository.findByOwnerId(ownerId);
     }
 
 }
