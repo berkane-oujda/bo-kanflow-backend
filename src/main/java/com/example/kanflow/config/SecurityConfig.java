@@ -44,8 +44,10 @@ public class SecurityConfig {
 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // public routes
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll())
-                // .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/login").permitAll())
+                .authorizeHttpRequests(
+                        auth -> auth.requestMatchers("/auth/**", "/health").permitAll())
+                // .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST,
+                // "/login").permitAll())
                 // secured routes
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
