@@ -1,5 +1,7 @@
 package com.example.kanflow.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +50,9 @@ public class Auth {
     public ResponseEntity<?> login(@RequestBody LoginDetailsDto body,
             HttpServletResponse response) throws ResponseStatusException {
         User user = this.userService.findByEmail(body.getEmail());
-        String hashedPassword = bCryptPasswordEncoder.encode(body.getPassword());
-        if (user == null || user.getPassword().equals(hashedPassword)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong email or password!");
+
+        if (user == null || !bCryptPasswordEncoder.matches(body.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong email or password!");
         }
 
         String jwt = this.tokenService.generateToken(user);
@@ -58,9 +60,9 @@ public class Auth {
         String cookieValue = String.format(
                 "jwt=%s; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=%d",
                 jwt, 24 * 60 * 60);
-
         response.setHeader("Set-Cookie", cookieValue);
 
         return new ResponseEntity<>("Successfully logged in", HttpStatus.OK);
     }
+
 }
