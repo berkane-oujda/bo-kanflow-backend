@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Collections;
-
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             System.out.println("|request|   : " + token + "  :  ya hala");
 
             if (token != null) {
-                Long userId = getUserIdFromToken(token);
+                UUID userId = getUserIdFromToken(token);
                 if (userId != null) {
                     User user = userService.getUserById(userId);
 
@@ -90,8 +90,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private Long getUserIdFromToken(String token) {
+    private UUID getUserIdFromToken(String token) {
         Jwt jwt = jwtDecoder().decode(token);
-        return jwt.getClaim("userId");
+        String claimAsString = jwt.getClaim("userId");
+        return UUID.fromString(claimAsString);
     }
 }

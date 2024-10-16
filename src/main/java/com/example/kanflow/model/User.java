@@ -1,6 +1,7 @@
 package com.example.kanflow.model;
 
 import java.util.Set;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +18,8 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -27,6 +28,9 @@ public class User {
     private String lastname;
     private String password;
     private String avatarUrl;
+
+    @OneToMany(mappedBy = "user")
+    Set<UserWorkspace> userWorkspaces;
 
     public User() {
     }
@@ -38,10 +42,7 @@ public class User {
         this.password = password;
     }
 
-    @ManyToMany(mappedBy = "members")
-    private Set<Workspace> workspaces;
-
-    public Long getID() {
+    public UUID getID() {
         return id;
     }
 
@@ -85,15 +86,4 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @JsonIgnore
-    public Set<Workspace> getWorkspaces() {
-        return workspaces;
-    }
-
-    @JsonIgnore
-    public void setWorkspaces(Set<Workspace> workspaces) {
-        this.workspaces = workspaces;
-    }
-
 }

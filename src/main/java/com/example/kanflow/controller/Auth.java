@@ -17,7 +17,7 @@ import com.example.kanflow.dto.RegsiterDetailsDto;
 import com.example.kanflow.dto.TokenDto;
 import com.example.kanflow.model.User;
 import com.example.kanflow.service.TokenService;
-import com.example.kanflow.service.UserServiceImplementation;
+import com.example.kanflow.service.UserService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,21 +29,18 @@ public class Auth {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private UserServiceImplementation userService;
+    private UserService userService;
     @Autowired
     private TokenService tokenService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
+    public ResponseEntity<Void> register(@RequestBody RegsiterDetailsDto body) throws ResponseStatusException {
         User user = userService.findByEmail(body.getEmail());
         if (user != null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "email already used");
         }
-        String hashedPassword = bCryptPasswordEncoder.encode(body.getPassword());
-        user = new User(body.getEmail(), body.getFirstname(), body.getLastname(), hashedPassword);
-        userService.saveUser(user);
-
-        return "OK!";
+        userService.register(body.getFirstname(), body.getLastname(), body.getEmail(), body.getPassword());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
@@ -53,7 +50,7 @@ public class Auth {
 
         if (user == null || !bCryptPasswordEncoder.matches(body.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong email or password!");
-        }
+
 
         String jwt = this.tokenService.generateToken(user);
 
