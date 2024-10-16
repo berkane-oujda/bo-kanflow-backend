@@ -1,25 +1,25 @@
 package com.example.kanflow.dto;
 
+import java.util.UUID;
+
 public class UserDto {
-    private Long id;
+    private UUID id;
     private String email;
     private String firstName;
     private String lastName;
 
-    // Constructor
-    public UserDto(Long id, String email, String firstName, String lastName) {
+    public UserDto(UUID id, String email, String firstName, String lastName) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    // Getters and setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

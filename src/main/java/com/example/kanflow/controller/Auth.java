@@ -51,9 +51,8 @@ public class Auth {
         if (user == null || !bCryptPasswordEncoder.matches(body.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong email or password!");
 
-
+        }
         String jwt = this.tokenService.generateToken(user);
-
         String cookieValue = String.format(
                 "jwt=%s; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=%d",
                 jwt, 24 * 60 * 60);
