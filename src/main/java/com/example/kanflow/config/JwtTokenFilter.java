@@ -60,6 +60,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private UUID getUserIdFromToken(String token) {
         Jwt jwt = jwtDecoder.decode(token);
-        return jwt.getClaim("userId");
+        return UUID.fromString(jwt.getClaim("userId"));
     }
 }
