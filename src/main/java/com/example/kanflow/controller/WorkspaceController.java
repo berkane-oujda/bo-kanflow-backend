@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.kanflow.dto.CreateWorkspaceDto;
 import com.example.kanflow.dto.RenameWorkspaceDTO;
 import com.example.kanflow.dto.UserDto;
+import com.example.kanflow.model.User;
 import com.example.kanflow.model.Workspace;
 import com.example.kanflow.service.WorkspaceService;
 

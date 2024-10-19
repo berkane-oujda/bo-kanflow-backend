@@ -90,7 +90,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
-    private UUID getUserIdFromToken(String token) {
+    public UUID getUserIdFromToken(String token) {
         Jwt jwt = jwtDecoder().decode(token);
         String claimAsString = jwt.getClaim("userId");
         return UUID.fromString(claimAsString);
