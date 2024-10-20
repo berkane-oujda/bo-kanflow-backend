@@ -1,28 +1,30 @@
-local:
-	@make db &
-	@make api; docker rm -f kanflow_db;
 
-deps:
-	@./gradlew dependencies
 
-api:
-	@env `cat .env | grep -v ^# ` ./gradlew bootRun;
+APP_NAME=bo-kanflow-app
+DOCKER_FILE_NAME=compose.yaml
+ENV_FILE=.env
 
-db: kanflow_db_data
-	@docker rm -f kanflow_db
-	@env `cat .env | grep -v ^# ` \
-		sh -c 'docker run --name kanflow_db\
-		-p$${KANFLOW_DB_PORT}:5432 \
-		-e POSTGRES_USER=$${KANFLOW_POSTGRES_USER} \
-		-e POSTGRES_PASSWORD=$${KANFLOW_POSTGRES_PASSWORD} \
-		-e POSTGRES_DB=$${KANFLOW_POSTGRES_DB} \
-		--volume=kanflow_db_data:/var/lib/postgresql/data \
-			postgres:15.6-alpine3.19'
 
-kanflow_db_data:
-	@docker volume create kanflow_db_data
+run:
+	@echo "Running app ${APP_NAME}"
+	@env `cat .env | grep -v ^# ` ./gradlew bootRun
 
-health:
-	@curl http://localhost:8080/health
+docker-up:
+	@echo "Starting docker containers with environment variables from ${ENV_FILE}"
+	@docker compose --env-file ${ENV_FILE} -f ${DOCKER_FILE_NAME} up -d
 
-.PHONY: local api db kanflow_db_data status
+docker-down:
+	@echo "Stopping docker containers"
+	@docker compose -f ${DOCKER_FILE_NAME} down
+
+build:
+	@echo "Building App!"
+	@env `cat .env | grep -v ^# ` ./gradlew clean build
+
+start:
+	@echo "Building and starting the app"
+	@make build
+	@make docker-up
+	@make run
+
+.PHONY: run docker-up docker-down build start

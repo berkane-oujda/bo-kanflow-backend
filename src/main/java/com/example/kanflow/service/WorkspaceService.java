@@ -9,7 +9,6 @@ public interface WorkspaceService {
     Workspace getById(UUID workspaceId);
 
     Workspace getWorkspaceByName(String name);
-
     List<Workspace> getWorkspacesByOwnerId(UUID ownerId);
 
     Workspace get(UUID ownerId, String name);

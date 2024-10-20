@@ -7,12 +7,14 @@ public class UserDto {
     private String email;
     private String firstName;
     private String lastName;
+    private String avatarUrl;
 
-    public UserDto(UUID id, String email, String firstName, String lastName) {
+    public UserDto(UUID id, String email, String firstName, String lastName, String avatarUrl) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.avatarUrl = avatarUrl;
     }
 
     public UUID getId() {
@@ -45,5 +47,13 @@ public class UserDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
