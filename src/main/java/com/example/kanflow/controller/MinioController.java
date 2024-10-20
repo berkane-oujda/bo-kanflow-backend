@@ -17,7 +17,7 @@ public class MinioController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             String fileUrl = minioService.uploadFile(file);
-            return ResponseEntity.ok("File uploaded successfully. Access it at: " + fileUrl);
+            return ResponseEntity.ok(fileUrl);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
         }

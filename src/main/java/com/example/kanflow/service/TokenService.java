@@ -26,7 +26,6 @@ public class TokenService {
             Jwt jwt = decoder.decode(token);
             return jwt.getExpiresAt().isAfter(Instant.now());
         } catch (JwtException e) {
-            System.out.println("Invalid JWT token: " + e.getMessage());
             return false;
         }
     }

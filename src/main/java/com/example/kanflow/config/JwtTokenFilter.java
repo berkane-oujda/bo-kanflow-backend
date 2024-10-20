@@ -46,9 +46,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         try {
 
             String token = extractToken(request);
-
-            System.out.println("|request|   : " + token + "  :  ya hala");
-
             if (token != null) {
                 UUID userId = getUserIdFromToken(token);
                 if (userId != null) {
