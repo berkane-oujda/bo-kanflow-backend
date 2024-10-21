@@ -32,7 +32,7 @@ public class UserWorkspace {
     private Workspace workspace;
 
     @Column
-    private String role; // OWNER, ADMIN, OBSERVER for now
+    private String role; // OWNER, ADMIN, VIEWER for now
 
     @Column
     @CreationTimestamp
@@ -42,8 +42,59 @@ public class UserWorkspace {
     @UpdateTimestamp
     private Date updatedAt;
 
+    public UserWorkspace() {
+    }
+
     public UserWorkspace(UUID userId, UUID workspaceId, String role) {
         this.id = new UserWorkspaceKey(userId, workspaceId);
         this.role = role;
+    }
+
+    public UserWorkspaceKey getId() {
+        return id;
+    }
+
+    public void setId(UserWorkspaceKey id) {
+        this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Date getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(Date joinedAt) {
+        this.joinedAt = joinedAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
     }
 }

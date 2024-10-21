@@ -3,12 +3,14 @@ local:
 	@make api; docker rm -f kanflow_db;
 
 delete_db:
-	@docker rm -f kanflow_db
+	 docker rm kanflow_db
 
+a:
+	whoami
 api:
 	@env `cat .env | grep -v ^# | xargs` ./gradlew bootRun;
 
-db: kanflow_db_data delete_db
+db:
 	@env `cat .env | grep -v ^# ` \
 		sh -c 'docker run -d --name kanflow_db\
 		-p$${KANFLOW_DB_PORT}:5432 \

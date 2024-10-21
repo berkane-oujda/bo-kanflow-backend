@@ -30,7 +30,7 @@ public class User {
     private String avatarUrl;
 
     @OneToMany(mappedBy = "user")
-    Set<UserWorkspace> userWorkspaces;
+    private Set<UserWorkspace> userWorkspaces;
 
     public User() {
     }
@@ -85,5 +85,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<UserWorkspace> getUserWorkspaces() {
+        return userWorkspaces;
+    }
+
+    public void setUserWorkspaces(Set<UserWorkspace> userWorkspaces) {
+        this.userWorkspaces = userWorkspaces;
     }
 }

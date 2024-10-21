@@ -3,8 +3,7 @@ package com.example.kanflow.dto;
 public class CreateWorkspaceDto {
     String name;
 
-    public CreateWorkspaceDto(String name) {
-        this.name = name;
+    public CreateWorkspaceDto() {
     }
 
     public String getName() {
