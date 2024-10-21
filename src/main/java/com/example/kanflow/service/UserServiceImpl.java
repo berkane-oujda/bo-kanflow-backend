@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.kanflow.model.User;
@@ -14,6 +16,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Lazy
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User getUserById(UUID id) {
@@ -31,7 +37,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User register(String firstname, String lastname, String email, String password) {
+        String hashedPassword = bCryptPasswordEncoder.encode(password);
+        User user = new User(email, firstname, lastname, hashedPassword);
         return userRepository.save(user);
     }
 

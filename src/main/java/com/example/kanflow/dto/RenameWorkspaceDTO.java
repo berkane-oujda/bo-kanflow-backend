@@ -1,10 +1,10 @@
 package com.example.kanflow.dto;
 
-public class CreateWorkspaceDto {
+public class RenameWorkspaceDTO {
 
     private String name;
 
-    public CreateWorkspaceDto() {
+    public RenameWorkspaceDTO() {
     }
 
     public String getName() {

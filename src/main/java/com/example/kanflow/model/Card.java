@@ -21,5 +21,19 @@ public class Card {
 
     private String description;
 
+    public UUID getId() {
+        return id;
+    }
 
+    public UUID getOwnerId() {
+        return owner_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
