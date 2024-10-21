@@ -20,16 +20,18 @@ import com.example.kanflow.dto.RenameWorkspaceDTO;
 import com.example.kanflow.dto.UserDto;
 import com.example.kanflow.model.User;
 import com.example.kanflow.model.Workspace;
+import com.example.kanflow.service.UserWorkspaceService;
 import com.example.kanflow.service.WorkspaceService;
 
 @RestController
 @RequestMapping("/workspaces")
 public class WorkspaceController {
-
-    @Autowired
-    public UserController userController;
-    @Autowired
-    public WorkspaceService workspaceService;
+  @Autowired
+  private UserController userController;
+  @Autowired
+  private WorkspaceService workspaceService;
+  @Autowired
+  private UserWorkspaceService userWorkspaceService;
 
     @GetMapping("")
     public List<Workspace> getOwnedWorkspaces() {
@@ -65,6 +67,7 @@ public class WorkspaceController {
         }
 
         w = workspaceService.create(ownerId, workspaceName, null);
+        userWorkspaceService.createUserWorkspace(ownerId, w.getId(), "OWNER");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(w);
     }

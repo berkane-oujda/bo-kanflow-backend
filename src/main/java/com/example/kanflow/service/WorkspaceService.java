@@ -2,6 +2,7 @@ package com.example.kanflow.service;
 
 import java.util.List;
 import java.util.UUID;
+
 import com.example.kanflow.model.Workspace;
 
 public interface WorkspaceService {

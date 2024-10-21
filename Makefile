@@ -1,5 +1,3 @@
-
-
 APP_NAME=bo-kanflow-app
 DOCKER_FILE_NAME=compose.yaml
 ENV_FILE=.env
