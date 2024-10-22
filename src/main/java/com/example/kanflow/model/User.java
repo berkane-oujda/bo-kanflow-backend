@@ -29,6 +29,7 @@ public class User {
     private String password;
     private String avatarUrl;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<UserWorkspace> userWorkspaces;
 
@@ -42,7 +43,7 @@ public class User {
         this.password = password;
     }
 
-    public UUID getID() {
+    public UUID getId() {
         return id;
     }
 

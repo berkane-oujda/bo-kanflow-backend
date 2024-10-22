@@ -53,7 +53,7 @@ public class Auth {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong email or password!");
 
         }
-        String jwt = this.tokenService.generateToken(user.getID());
+        String jwt = this.tokenService.generateToken(user.getId());
         String cookieValue = String.format(
                 "jwt=%s; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=%d",
                 jwt, 15 * 60);
