@@ -1,7 +1,9 @@
 package com.example.kanflow.controller;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.kanflow.dto.UserDto;
 import com.example.kanflow.dto.UserUpdateDto;
 import com.example.kanflow.model.User;
 import com.example.kanflow.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -28,16 +26,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/me")
-    public UserDto me() {
+    public User me() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()
                 && authentication.getPrincipal() instanceof User) {
-            User currentUser = (User) authentication.getPrincipal();
-            return new UserDto(
-                    currentUser.getID(),
-                    currentUser.getEmail(),
-                    currentUser.getFirstname(),
-                    currentUser.getLastname(), currentUser.getAvatarUrl());
+            return (User) authentication.getPrincipal();
         } else {
             return null;
         }

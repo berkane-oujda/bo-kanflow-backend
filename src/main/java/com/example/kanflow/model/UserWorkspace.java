@@ -1,7 +1,6 @@
 package com.example.kanflow.model;
 
 import java.util.Date;
-import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -45,8 +44,10 @@ public class UserWorkspace {
     public UserWorkspace() {
     }
 
-    public UserWorkspace(UUID userId, UUID workspaceId, String role) {
-        this.id = new UserWorkspaceKey(userId, workspaceId);
+    public UserWorkspace(User user, Workspace workspace, String role) {
+        this.id = new UserWorkspaceKey(user.getId(), workspace.getId());
+        this.user = user;
+        this.workspace = workspace;
         this.role = role;
     }
 

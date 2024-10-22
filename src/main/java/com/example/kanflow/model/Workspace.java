@@ -25,13 +25,13 @@ public class Workspace {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String avatar;
 
-    @JsonIgnore
+    // @JsonIgnore
     @Column(name = "owner_id", nullable = false)
     private UUID ownerId;
 
@@ -63,6 +63,7 @@ public class Workspace {
         this.id = id;
     }
 
+    @JsonIgnore
     public Set<UserWorkspace> getUserWorkspaces() {
         return userWorkspaces;
     }
