@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.kanflow.dto.CreateWorkspaceDto;
+import com.example.kanflow.dto.InviteToWorkspaceDto;
 import com.example.kanflow.dto.RenameWorkspaceDTO;
 import com.example.kanflow.model.User;
 import com.example.kanflow.model.Workspace;
@@ -71,7 +72,7 @@ public class WorkspaceController {
         }
 
         w = workspaceService.create(ownerId, workspaceName, null);
-        userWorkspaceService.createUserWorkspace(user, w, "OWNER");
+        userWorkspaceService.createUserWorkspace(user, w);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(w);
     }
@@ -89,4 +90,12 @@ public class WorkspaceController {
         workspaceService.rename(UUID.fromString(workspaceId), body.getName());
         return getWorkspace(workspaceId);
     }
+
+    // for now you can only invite existing users
+    @PostMapping("/workspaces/{workspaceId}/invite")
+    public String postMethodName(@RequestBody InviteToWorkspaceDto body) {
+
+        return "OK!";
+    }
+
 }
