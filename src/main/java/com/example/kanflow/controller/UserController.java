@@ -40,7 +40,6 @@ public class UserController {
     public ResponseEntity<User> updateUser(
             @PathVariable UUID id,
             @RequestBody UserUpdateDto request) {
-        // Find the user by ID
         Optional<User> userOptional = userRepository.findById(id);
 
         if (userOptional.isEmpty()) {

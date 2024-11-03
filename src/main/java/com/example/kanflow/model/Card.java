@@ -15,7 +15,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private UUID owner_id;
+    private UUID ownerId;
 
     private String title;
 
@@ -26,7 +26,7 @@ public class Card {
     }
 
     public UUID getOwnerId() {
-        return owner_id;
+        return ownerId;
     }
 
     public String getTitle() {
