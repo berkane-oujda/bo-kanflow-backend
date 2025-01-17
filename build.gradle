@@ -26,6 +26,8 @@ dependencies {
     implementation 'org.hibernate:hibernate-core:6.4.4.Final'
     implementation 'com.zaxxer:HikariCP:5.0.1'
 
+    // liquibase for migrations
+    implementation 'org.liquibase:liquibase-core'
 
     // PostgreSQL JDBC Driver
     runtimeOnly 'org.postgresql:postgresql'
