@@ -5,6 +5,8 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.kanflow.enums.WorkspaceRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -31,7 +33,7 @@ public class UserWorkspace {
     private Workspace workspace;
 
     @Column
-    private String role; // OWNER, ADMIN, VIEWER for now
+    private WorkspaceRole role;
 
     @Column
     @CreationTimestamp
@@ -44,7 +46,7 @@ public class UserWorkspace {
     public UserWorkspace() {
     }
 
-    public UserWorkspace(User user, Workspace workspace, String role) {
+    public UserWorkspace(User user, Workspace workspace, WorkspaceRole role) {
         this.id = new UserWorkspaceKey(user.getId(), workspace.getId());
         this.user = user;
         this.workspace = workspace;
@@ -59,11 +61,11 @@ public class UserWorkspace {
         this.id = id;
     }
 
-    public String getRole() {
+    public WorkspaceRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(WorkspaceRole role) {
         this.role = role;
     }
 

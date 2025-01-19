@@ -9,6 +9,10 @@ run:
 	@echo "Running app ${APP_NAME}"
 	@env `cat .env | grep -v ^# ` ./gradlew bootRun
 
+run-debug:
+	@echo "Running app ${APP_NAME}"
+	@env `cat .env | grep -v ^# ` ./gradlew bootRun --debug-jvm
+
 up:
 	@echo "Starting docker containers with environment variables from ${ENV_FILE}"
 	@docker compose --env-file ${ENV_FILE} -f ${DOCKER_FILE_NAME} up -d
