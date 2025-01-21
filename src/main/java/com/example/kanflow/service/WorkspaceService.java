@@ -10,11 +10,13 @@ public interface WorkspaceService {
     Workspace getById(UUID workspaceId);
 
     Workspace getWorkspaceByName(String name);
-    List<Workspace> getWorkspacesByOwnerId(UUID ownerId);
+    List<Workspace> getOwnedWorkspaces(UUID userId);
 
-    Workspace get(UUID ownerId, String name);
+    List<Workspace> getAllWorkspaces(UUID userId);
 
-    Workspace create(UUID ownerId, String name, String avatar);
+    Workspace get(UUID UserId, String name);
+
+    Workspace create(UUID userId, String name, String avatar);
 
     void rename(UUID workspaceId, String name);
 }

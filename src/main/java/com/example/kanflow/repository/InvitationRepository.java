@@ -1,5 +1,6 @@
 package com.example.kanflow.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,5 +14,5 @@ public interface InvitationRepository extends JpaRepository<Invitation, UUID> {
 
     Optional<Invitation> findByInvitationToken(String token);
 
-    Optional<Invitation> findByEmailAndWorkspaceId(String email, UUID workspaceId);
+    List<Invitation> findByEmailAndWorkspaceId(String email, UUID workspaceId);
 }

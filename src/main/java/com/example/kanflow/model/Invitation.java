@@ -43,10 +43,14 @@ public class Invitation {
     @UpdateTimestamp
     private Date updatedAt;
 
+    public Invitation() {
+    }
+
     public Invitation(String email, UUID workspaceId, WorkspaceRole role) {
         this.email = email;
         this.workspaceId = workspaceId;
         this.role = role;
+        this.status = InvitationStatus.PENDING;
     }
 
     public UUID getId() {

@@ -30,11 +30,12 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     public Invitation inviteMember(UUID workspaceId, String email, WorkspaceRole role) {
         // Check if the user is already invited
-        if (invitationRepository.findByEmailAndWorkspaceId(email, workspaceId).isPresent()) {
+        if (!invitationRepository.findByEmailAndWorkspaceId(email, workspaceId).isEmpty()) {
             throw new IllegalStateException("User already invited");
         }
 
         Invitation invitation = new Invitation(email, workspaceId, role);
+
         return invitationRepository.save(invitation);
     }
 
