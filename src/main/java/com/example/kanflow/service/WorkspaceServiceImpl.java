@@ -16,12 +16,13 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     private WorkspaceRepository workspaceRepository;
 
     @Override
-    public Workspace create(UUID ownerId, String name, String avatar) {
+    public Workspace create(UUID userId, String name, String avatar) {
         if (avatar == null) {
             avatar = "avatar";
         }
-        Workspace w = new Workspace(ownerId, name, avatar);
+        Workspace w = new Workspace(userId, name, avatar);
         workspaceRepository.save(w);
+
         return w;
     }
 
@@ -41,13 +42,17 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     }
 
     @Override
-    public Workspace get(UUID ownerId, String name) {
-        return workspaceRepository.findByOwnerIdAndName(ownerId, name);
+    public Workspace get(UUID userId, String name) {
+        return workspaceRepository.findByOwnerIdAndName(userId, name);
     }
 
     @Override
-    public List<Workspace> getWorkspacesByOwnerId(UUID ownerId) {
-        return workspaceRepository.findByOwnerId(ownerId);
+    public List<Workspace> getOwnedWorkspaces(UUID userId) {
+        return workspaceRepository.findByOwnerId(userId);
     }
 
+    @Override
+    public List<Workspace> getAllWorkspaces(UUID userId) {
+        return workspaceRepository.findByOwnerId(userId);
+    }
 }

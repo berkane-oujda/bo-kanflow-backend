@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.kanflow.dto.CreateWorkspaceDto;
+import com.example.kanflow.dto.InviteToWorkspaceDto;
 import com.example.kanflow.dto.RenameWorkspaceDTO;
+import com.example.kanflow.model.Invitation;
 import com.example.kanflow.model.User;
 import com.example.kanflow.model.Workspace;
+import com.example.kanflow.service.InvitationService;
 import com.example.kanflow.service.UserWorkspaceService;
 import com.example.kanflow.service.WorkspaceService;
 
@@ -32,12 +35,14 @@ public class WorkspaceController {
     private WorkspaceService workspaceService;
     @Autowired
     private UserWorkspaceService userWorkspaceService;
+    @Autowired
+    private InvitationService invitationService;
 
     @GetMapping("")
     public List<Workspace> getOwnedWorkspaces() {
         User user = userController.me();
 
-        return workspaceService.getWorkspacesByOwnerId(user.getId());
+        return userWorkspaceService.getAllWorkspaces(user.getId());
     }
 
     @GetMapping("/{workspaceId}")
@@ -71,7 +76,7 @@ public class WorkspaceController {
         }
 
         w = workspaceService.create(ownerId, workspaceName, null);
-        userWorkspaceService.createUserWorkspace(user, w, "OWNER");
+        userWorkspaceService.createUserWorkspace(user, w);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(w);
     }
@@ -88,5 +93,29 @@ public class WorkspaceController {
 
         workspaceService.rename(UUID.fromString(workspaceId), body.getName());
         return getWorkspace(workspaceId);
+    }
+
+    // for now you can only invite existing users
+    @PostMapping("/{workspaceId}/invite")
+    public ResponseEntity<String> inviteMember(@PathVariable("workspaceId") UUID workspaceId, @RequestBody InviteToWorkspaceDto body) throws ResponseStatusException {
+        try {
+            Invitation invitation = invitationService.inviteMember(workspaceId, body.getEmail(), body.getRole());
+            String invitationLink = String.format("/workspaces/invitations/%s/accept", invitation.getId().toString());
+            return ResponseEntity.status(HttpStatus.CREATED).body(invitationLink);
+        } catch (IllegalStateException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
+    }
+
+    // for now you can only invite existing users
+    @PostMapping("/invitations/{invitationId}/accept")
+    public ResponseEntity<Void> acceptWorkspaceInvite(@PathVariable("invitationId") UUID invitationId) throws ResponseStatusException {
+        try {
+            invitationService.acceptInvitation(invitationId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+
+        } catch (IllegalStateException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
     }
 }
