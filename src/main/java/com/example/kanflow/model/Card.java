@@ -19,6 +19,8 @@ public class Card {
 
     private String title;
 
+    private UUID belongTo;
+
     private String description;
 
     public UUID getId() {
@@ -31,6 +33,10 @@ public class Card {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getBelongTo() {
+        return belongTo;
     }
 
     public String getDescription() {
